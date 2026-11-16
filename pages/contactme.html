@@ -38,6 +38,10 @@
 					<li> <a href="./personal.html"> Personal </a> </li>
 					<li> <a href="./contactme.html" class="active"> Contact </a> </li>
 					<li> <a href="./experiments.html"> Experiments </a></li>
+					<li> <a href="../form-no-js.html"> FormNoJs </a> </li>
+					<li> <a href="../form-with-js.html"> FormWithJs </a> </li>
+
+
 				</ul>
 			</nav>
 		</header>
@@ -74,34 +78,39 @@
 					</p>
 					<strong> anthonylestrella06@gmail.com</strong>
 				</noscript>
-				<form class="contactForm">
+				<form class="contactForm" method="post" action="https://httpbin.org/post">
 					<fieldset>
 						<legend>
 							Contact Form
 						</legend>
 						<div class="formRow">
-							<label for="Name"> Name </label>
-							<input type="text" id="Name" name="Name">
+							<label for="Name" > Name </label>
+							<input type="text" id="Name" name="Name" autocomplete="name"  minlength="1" maxlength="100" required  placeholder="Enter your name! 1-100 characters. ">
 						</div>
 						<br> 
 						<div class="formRow">
 							<label for="Email"> Email </label>
-							<input type="email" id="Email" name="Email">
+							<input type="email" id="Email" name="Email" placeholder="abc@hostname.com" required autocomplete="email">
 						</div>
 						<br> 
 
 						<div class="formRow">
 							<label for="Number"> Number </label>
-							<input type="tel" id="Number" name="Number">
+							<input type="tel" id="Number" name="Number" placeholder="Phone Number (xxx-xxx-xxxx)">
 						</div>
-					
+
+
 						<br> 
 						<div class="formRow">
-							<label for="message"> Message </label>
-							<textarea id="message" name="message">
-							</textarea>						
+							<label for="comments"> Comments </label>
+							<textarea id="comments" name="comments" minlength="10" maxlength="1000" required placeholder="Leave up to an 1000 word comment!"></textarea>						
 						</div>
 						
+						<div>
+							<label for="possible_bot"></label>
+							<input type="hidden" id="possible_bot" name="possible_bot " value="true">
+						</div>
+					
 						<br>
 						<div class="formRow">
 							<button> Submit </button>

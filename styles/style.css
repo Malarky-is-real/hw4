@@ -1,28 +1,76 @@
 
+
 :root{
-    background: #474747;
+    background: var(--pageBackground);
     font-family: "Lucida Grande", "Lucida Sans Unicode", verdana, lucida, 	helvetica, sans-serif;
     color: black;
     max-width: 60em;
     padding: 0em;
     width: 95%;
     margin: 0 auto;
-    
+            --pageBackground: #070707;
+        --defaultBorderColor: white;
+        --defaultBorder: .3125em solid var(--defaultBorderColor);
 
+        --light3background: white;
+        --light2Background: rgb(208, 229, 248);
+        --light1Background: #a3d1ff;
+        --defaultBackground: #99CCFF;
+        --dark1Background: #045FCD;
+        --dark2Background: #034AA0;
+        --dark3Background:  #023573;
+        --navTextColor: white;
+        --hoverNavTextColor: white;
+        --figureBackground: #7FBFFF;
+        
+        --formBackgroundColor: aliceblue;
+        --formTextColor: var(--dark3Background);
+        --defaultTextColor: black;
 
-    --defaultBorder: .3125em solid white;
-    --light3background: white;
-    --light2Background: rgb(208, 229, 248);
-    --light1Background: #a3d1ff;
-    --defaultBackground: #99CCFF;
-    --dark1Background: #045FCD;
-    --dark2Background: #034AA0;
-    --dark3Background:  #023573;
+        --headerGradientOne: #155b82;
+        --headerGradientTwo: #1f77a6;
+        --headerGradientThree: #2b91c0;
 
-    --figureBackground: #7FBFFF;
-    
-    
+        --defaultHeadingColor: rgb(28, 28, 28);
 }
+
+
+
+[data-theme="dark"]{
+        --pageBackground: #070707;
+        
+        --light3background: rgb(2, 9, 48);
+        --light2Background: rgb(3, 37, 66);
+        --light1Background: #040f1b;
+        --defaultBackground: #023263;
+        --dark1Background: #04244b;
+        --dark2Background: #042e63;
+        --dark3Background:  #042244;
+        --navTextColor: rgb(173, 159, 159);
+        --hoverNavTextColor: rgb(167, 157, 157);
+        --defaultBorderColor: var(--light2Background);
+        --defaultBorder: .3125em solid var(--defaultBorderColor);
+        --figureBackground: #0c2a47;
+        --formBackgroundColor: rgb(86, 89, 92);
+
+        --formTextColor: black;
+
+        --defaultTextColor: #969191;
+        --defaultHeadingColor: #a7a6a6;
+
+        --headerGradientOne: #0f405a;
+        --headerGradientTwo: #07202e;
+        --headerGradientThree: #2b91c0;
+
+        --headerGradientOne: var(--light1Background);
+        --headerGradientTwo: var(--light2Background);
+        --headerGradientThree: var(--dark1Background);
+}
+
+p, li, h2, h4, footer, hello-world{
+    color: var(--defaultTextColor);
+}
+
 
 .bodyHeader{
     border-bottom: 5px solid  var(--light2Background);
@@ -35,7 +83,6 @@
     background-image: linear-gradient(to bottom, var(--defaultBackground) 50%, var(--dark2Background) 99%, var(--dark2Background)  100%);
 
 }
-
 
 /*
     Gets a picture tag only if it's the DIRECT CHILD of a container with the 
@@ -78,7 +125,7 @@
 
 .bodyHeader > nav ul li{
     flex: 1;
-    float: left;
+    float: left;    
 }
 
 /*
@@ -94,9 +141,9 @@
         formRow class.
 
 */
-.bodyHeader > nav ul li a, .formRow > button{
+.bodyHeader > nav ul li a,.navItem, .formRow > button{
     display: block;
-    color: white;
+    color: var(--navTextColor);
     background-color: var(--dark2Background);
     text-align: center;
 }
@@ -107,10 +154,18 @@
     The nav tag is then the direct child of a container with the
         bodyHeader class.
 */
-.bodyHeader > nav  ul li a{
+.bodyHeader > nav  ul li a, .navItem{
 
-    padding: 1.5em 1em;    
+    padding: 1.5em 1em; 
+    text-align: center;   
     text-decoration: none;
+}
+
+.navItem{
+    width: 100%;
+    height: 100%;
+    font-size: .9em;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", verdana, lucida, 	helvetica, sans-serif;
 }
 
 /*
@@ -123,8 +178,8 @@
     The style changes the look of the <a> tag if it's reached by assistive 
     technology or non mice methods (tabbing). 
 */
-.bodyHeader > nav  a:focus-visible,.formRow > button:focus-visible {  
-    color: white;
+.bodyHeader > nav  a:focus-visible,.formRow > button:focus-visible, .navItem:focus-visible {  
+    color: var(--navTextColor);
     background-color:  var(--dark1Background);
     text-decoration: underline;
     
@@ -148,8 +203,8 @@
 
 
 */
-.bodyHeader > nav ul li a:hover, .formRow > button:hover{  
-    color: white;
+.bodyHeader > nav ul li a:hover,.navItem:hover, .formRow > button:hover{  
+    color: var(--hoverNavTextColor);
     background-color:  var(--dark1Background);
     text-decoration: underline;
     
@@ -174,12 +229,14 @@
 
 
 */
-.bodyHeader > nav ul li a:focus, .formRow > button:focus{  
-    color: white;
+.bodyHeader > nav ul li a:focus,.navItem:focus, .formRow > button:focus{  
+    color: var(--hoverNavTextColor);
     background-color:  var(--dark1Background);
     text-decoration: underline;
     
 }
+
+
 
 
 /*
@@ -195,7 +252,9 @@
     
 */
 .bodyHeader > nav ul li a.active:focus,
-.bodyHeader > nav ul li a.active:hover{
+.bodyHeader > nav ul li a.active:hover,
+.navItem.active:focus,
+.navItem.active:hover{
     background-color:  var(--dark3Background);   
 }
 
@@ -231,6 +290,7 @@
 
 .mainHeader > h2{
     margin: 0;
+    view-transition-name: title;
 
 }
 
@@ -255,8 +315,8 @@
 */
 
 .firstSectionInfo > picture img{
-    color: black;
-    border: .2em white solid;
+    color: var(--defaultTextColor);
+    border: .2em var(--defaultBorderColor) solid;
     margin: 0.5em;
     object-fit: cover;
     background-color: var(--figureBackground);
@@ -329,8 +389,8 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    color: black;
-    border: thin white solid;
+    color: var(--defaultTextColor);
+    border: thin var(--defaultBorderColor) solid;
     margin: 0.5em;
     padding: 0.5em;
     
@@ -423,7 +483,7 @@
 
 */
 .cardBox ~ img{
-    border: .3em solid black;
+    border: .3em solid var(--defaultBorderColor);
 }
 
 .listSection{
@@ -448,11 +508,11 @@
 }
 
 .svgFigure{
-    background-image: linear-gradient(to bottom, #155b82 0%, #1f77a6 50%, #2b91c0 100%);
+    background-image: linear-gradient(to bottom, var(--headerGradientOne) 0%, var(--headerGradientTwo) 50%, var(--headerGradientThree) 100%);
 }
 
 .randomSection{
-    background-image: linear-gradient(to right, #155b82 0%, #1f77a6 50%, #2b91c0 100%);
+    background-image: linear-gradient(to right, var(--headerGradientOne) 0%, var(--headerGradientTwo) 50%, var(--headerGradientThree) 100%);;
 
 }
 /*
@@ -466,13 +526,35 @@
 */
 
 fieldset, .individualFigure, .singleFigure{
-    background-color: #7FBFFF;
+    background-color: var(--figureBackground);
 }
 .formRow{
     display: flex;
     flex-direction: column;
     margin: 0em .3em;
     
+}
+
+#formStatus{
+    border-radius: .1em;
+    border-width: .2em;
+    border-style: inset;
+    padding: .5em;
+    background-color: var(--light1Background);
+
+}
+
+
+.nearMax{
+    font-style:italic;
+    font-weight: bold;
+    text-decoration:underline;
+    color: var(--defaultTextColor);
+}
+
+#charCount{
+    font-size: .8em;
+    text-align: right;
 }
 
 
@@ -483,6 +565,10 @@ fieldset, .individualFigure, .singleFigure{
    
 
 */
+
+.formRow{
+    color: var(--defaultHeadingColor)
+}
 .formRow label{
     display: block;
     
@@ -528,9 +614,54 @@ fieldset, .individualFigure, .singleFigure{
     Focuses specifically on the text input
 */
 
-.formRow input[type=text]{
-    background-color: aliceblue;
+.formRow input[type=text], 
+.formRow input[type=email],
+.formRow textarea, 
+#formStatus{
+    background-color: var(--formBackgroundColor);
 }
+
+/*
+    Get all required inputs and textareas placeholders
+*/
+textarea:required::placeholder, 
+input:required::placeholder{
+    text-decoration: underline;
+    color: var(--formTextColor);
+}
+
+
+legend{
+    color:var(--defaultTextColor);
+}
+
+/*
+    Get all invalid inputs and textareas placeholders
+*/
+textarea:user-invalid::placeholder, 
+input:user-invalid::placeholder{
+    color: var(--defaultWarningColor);
+    text-decoration: underline;
+}
+
+/*
+    Get all invalid inputs and textareas 
+*/
+textarea:user-invalid, 
+input:user-invalid{
+    border-color: var(--defaultWarningColor);
+}
+
+
+/*
+    Get all valid inputs and textareas 
+*/
+textarea:user-valid, 
+input:user-valid{
+    border-color: var(--defaultValidColor);
+}
+
+
 
 /*
     Gets button tag if it's the descendant of a container with the formRow
@@ -591,26 +722,26 @@ h1, h2, h3, h4{
 
 */
 section > h2, section > h3, article > h2{
-    background-image: linear-gradient(to bottom, #155b82 0%, #1f77a6 50%, #2b91c0 100%);    
+    background-image: linear-gradient(to bottom, var(--headerGradientOne) 0%, var(--headerGradientTwo)  50%, var(--headerGradientThree)  100%);    
 } 
 
 h1 {
-    color: rgb(28, 28, 28);
+    color: var(--defaultHeadingColor);
     font-size: 3rem;
     margin-bottom:20px;
     text-align: center;
-    border-top: 5px solid aliceblue;
+    border-top: 5px solid var(--defaultBorderColor);
 
 }
 
 h2 {
-    color: rgb(28, 28, 28);
+    color: var(--defaultHeadingColor);
     font-size: 2rem;
 
 }
 
 h3 {
-    color: rgb(28, 28, 28);
+    color: var(--defaultHeadingColor);
     font-size: 1.5rem;
 
 }
@@ -639,13 +770,20 @@ body{
 }
 
 footer{
-    border-top: 2px solid aliceblue;
+    border-top: 2px solid var(--defaultBorderColor);
     text-align: center;
     background-image: linear-gradient(var(--defaultBackground) 1%, var(--dark2Background) 98%, var(--dark2Background)  100%);
 }
 
 canvas{
     background-color: var(--light1Background);
+}
+
+@media screen and (max-width: 980px){
+    nav ul li a, .navItem{
+        font-size: .8em ;
+    }
+
 }
 
 @media screen and (max-width: 960px){
@@ -679,7 +817,7 @@ canvas{
     
 }
 
-@media screen and (max-width: 720px){
+@media screen and (max-width: 900px){
 
     /*
         Gets a ul tag if it's the descedant of a nav tag. 
@@ -700,7 +838,7 @@ canvas{
         The nav tag is then the direct child of a container with the
             bodyHeader class.
     */
-    .bodyHeader > nav  ul li a{
+    .bodyHeader > nav  ul li a, .navItem{
         border-top: .2em solid var(--light2Background);       
     }
     
@@ -760,3 +898,14 @@ canvas{
 }
 
 
+@view-transition{
+    navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
