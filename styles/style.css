@@ -78,6 +78,8 @@ p, li, h2, h4, footer, hello-world{
 }
 
 
+
+
 .bodyHeader{
     border-bottom: 5px solid  var(--light2Background);
 
@@ -103,7 +105,9 @@ p, li, h2, h4, footer, hello-world{
     justify-content: center;
     align-items: center;
     margin-bottom: .8em;
+    
 }
+
 
 
 /*
@@ -432,7 +436,6 @@ p, li, h2, h4, footer, hello-world{
 .singleFigure canvas{
     max-width: 100%;
     height: auto;
-    width: auto/9;
 
 }
 /*
@@ -518,7 +521,7 @@ p, li, h2, h4, footer, hello-world{
 }
 
 .randomSection{
-    background-image: linear-gradient(to right, var(--headerGradientOne) 0%, var(--headerGradientTwo) 50%, var(--headerGradientThree) 100%);;
+    background-image: linear-gradient(to right, var(--headerGradientOne) 0%, var(--headerGradientTwo) 50%, var(--headerGradientThree) 100%);
 
 }
 /*
@@ -538,6 +541,7 @@ fieldset, .individualFigure, .singleFigure{
     display: flex;
     flex-direction: column;
     margin: 0em .3em;
+    color: var(--defaultHeadingColor);
     
 }
 
@@ -572,9 +576,7 @@ fieldset, .individualFigure, .singleFigure{
 
 */
 
-.formRow{
-    color: var(--defaultHeadingColor)
-}
+
 .formRow label{
     display: block;
     
@@ -903,9 +905,37 @@ canvas{
     
 }
 
+/* 1. Enable View Transitions for the page */
+@view-transition {
+  navigation: auto;
+}
 
-@view-transition{
-    navigation: auto;
+/* 2. Define the slide-out animation (Old page moving left) */
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100vw);
+  }
+}
+
+/* 3. Define the slide-in animation (New page coming from the right) */
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+::view-transition-old(root) {
+  animation: 0.4s ease-in-out both slide-out-left;
+}
+
+::view-transition-new(root) {
+  animation: 0.4s ease-in-out both slide-in-right;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -913,5 +943,18 @@ canvas{
   ::view-transition-old(*),
   ::view-transition-new(*) {
     animation: none !important;
+  }
+}
+
+.titleImage>picture {
+  animation: slideInPicture 1.2s ease-out forwards;
+}
+
+@keyframes slideInPicture {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
   }
 }
