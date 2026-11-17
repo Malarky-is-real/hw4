@@ -42,24 +42,16 @@ textField.addEventListener('input', updateCommentCount)
 textField.addEventListener('input', checkCommentsValidity, true)
 textField.addEventListener('invalid', checkCommentsValidity, true)
 
-form.addEventListener('invalid', checkErrors, true)
 form.addEventListener('submit', submitErrors)
 
-let form_errors= []
 
 
 
-
-function checkErrors(event){
-    const failedField = event.target
-    form_errors.push({field: failedField.name, message: failedField.validationMessage})
-    console.log({field: failedField.name, message: failedField.validationMessage})
-}
+const finErrs = [];
 
 
-function submitErrors(){
-    console.log("AAA")
-    errorsField.value = JSON.stringify(form_errors)    
+function submitErrors(){  
+    errorsField.value = JSON.stringify(finErrs)    
 }
 
 
@@ -70,16 +62,22 @@ const currentErrors = {
 };
 
 function statusAriaUpdater(){
+    console.log(finErrs)
     const activeErrors = [];
     if (currentErrors.name){ 
         activeErrors.push(currentErrors.name);
+        finErrs.push({field: 'Name', message: currentErrors.name});
     }
     if (currentErrors.email){
         activeErrors.push(currentErrors.email)
+        finErrs.push({field: 'Email', message: currentErrors.email})
+
     }
     if (currentErrors.comments)
     {
         activeErrors.push(currentErrors.comments)
+        finErrs.push({field: 'Comments', message: currentErrors.comments})
+
     } 
     
 
@@ -155,6 +153,7 @@ function updateCommentCount(){
     
     if(textField.value.length == textField.maxLength){
         countMessage = 'Character limit reached'
+        ariaCount.classList.replace('nearMax','atMax')
     }
     if(textField.value.length >= textField.maxLength - 100 ){
         ariaCount.classList.replace('notNear','nearMax')
@@ -171,46 +170,4 @@ function updateCommentCount(){
 
 
 
-
-const modeButton = document.getElementById("modeButton")
-modeButton.addEventListener('click', themeChanger)
-applyTheme(getModePref());
-
-
-
-function getModePref(){
-    try{
-        const savedTheme = localStorage.getItem('theme')
-        return savedTheme
-    }
-    catch{
-        console.warn('Unable to read preference from local storage')
-    }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-
-
-
-}
-
-function applyTheme(theme){
-    document.documentElement.setAttribute('data-theme', theme)
-    try{
-        localStorage.setItem('theme', theme)
-    }
-    catch{
-        console.error("Unable to save")
-    }
-    
-    
-}
-
-
-
-
-function themeChanger(){
-    const currTheme = document.documentElement.getAttribute('data-theme')
-    const newTheme = currTheme === 'dark' ? 'light' : 'dark'
-    console.log(currTheme)
-    applyTheme(newTheme)
-}
 

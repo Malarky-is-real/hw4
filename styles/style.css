@@ -562,6 +562,12 @@ fieldset, .individualFigure, .singleFigure{
     color: var(--defaultTextColor);
 }
 
+.atMax{
+    font-style: oblique;
+    text-decoration:line-through;
+    font-weight: bold;
+}
+
 #charCount{
     font-size: .8em;
     text-align: right;
@@ -701,6 +707,9 @@ input:user-valid{
 .jsOff{
     display: none;
 }
+
+
+
 
 math{
     font-size: 2em;
