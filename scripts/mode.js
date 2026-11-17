@@ -44,6 +44,11 @@ function themeChanger(){
     const currTheme = document.documentElement.getAttribute('data-theme')
     const newTheme = currTheme === 'dark' ? 'light' : 'dark'
     console.log(currTheme)
+    const modeButton = document.getElementById('modeButton')
+    modeButton.textContent = currTheme.replace(currTheme[0], currTheme[0].toUpperCase()) + " Mode"
     applyTheme(newTheme)
+    
+    
+
 }
 
