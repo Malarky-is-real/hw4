@@ -16,14 +16,17 @@ const submitButton = document.getElementById('submitButton')
 let globalWarnings = false
 
 
-nameField.addEventListener('blur', checkNameValidity, true)
+nameField.addEventListener('input', checkNameValidity, true)
 nameField.addEventListener('invalid', checkNameValidity, true)
 
-emailField.addEventListener('blur', checkEmailValidity, true)
+
+emailField.addEventListener('input', checkEmailValidity, true)
 emailField.addEventListener('invalid', checkEmailValidity, true)
 
+
 textField.addEventListener('input', updateCommentCount)
-textField.addEventListener('blur', checkCommentsValidity, true)
+
+textField.addEventListener('input', checkCommentsValidity, true)
 textField.addEventListener('invalid', checkCommentsValidity, true)
 
 form.addEventListener('invalid', checkErrors, true)
@@ -47,67 +50,88 @@ function submitErrors(){
 }
 
 
+const currentErrors = {
+    name: '',
+    email: '',
+    comments: ''
+};
 
-
-function checkAllValidity(){
-    checkNameValidity()
-    checkCommentsValidity()
-    checkEmailValidity()
-
+function statusAriaUpdater(){
+    const activeErrors = [];
+    if (currentErrors.name){ 
+        activeErrors.push(currentErrors.name);
+    }
+    if (currentErrors.email){
+        activeErrors.push(currentErrors.email)
+    }
+    if (currentErrors.comments)
+    {
+        activeErrors.push(currentErrors.comments)
+    } 
     
 
-    
+    ariaField.textContent = activeErrors.join('\n')
+    console.log(activeErrors)
+
 
 }
 
 
 function checkNameValidity(event){
-    event.preventDefault();
 
     errorMessage = ''    
 
     if(nameField.validity.valueMissing || nameField.validity.tooShort){
-        errorMessage += '- You need at least 1 character for the Name field. You are currently using ' + (nameField.value.length) + '.'
+        errorMessage += '\n- You need at least 1 character for the Name field. You are currently using ' + (nameField.value.length) + '.'
     }
     nameField.setCustomValidity(errorMessage)
-    nameField.reportValidity()
-    ariaField.textContent = errorMessage
+    if(event.type != 'invalid'){
+        nameField.reportValidity()
+    }
+
+    currentErrors.name = errorMessage
+    statusAriaUpdater()
 }
 
 function checkEmailValidity(event){
-    event.preventDefault();
 
     let errorMessage = ''
 
     if(emailField.validity.valueMissing || emailField.validity.typeMismatch){
-        errorMessage = '-The input is not an valid email address. Check for an @ symbol or characters following the @ symbol.  \nExample format: a@b'
+        errorMessage += '\n - The input is not an valid email address. Check for an @ symbol or characters following the @ symbol.  \nExample format: a@b'
     }
-    else if(emailField.validity.tooShort){
-        errorMessage += '\n-You need at least 3 characters for the Email field. You are currently using ' + (emailField.value.length) + '.'
+    if(emailField.validity.tooShort){
+        errorMessage += '\n - You need at least 3 characters for the Email field. You are currently using ' + (emailField.value.length) + '.'
     }
 
 
     
     emailField.setCustomValidity(errorMessage)
-    emailField.reportValidity()
-    ariaField.textContent = errorMessage
+    if(event.type != 'invalid'){
+        emailField.reportValidity()
+    }
+
+    currentErrors.email = errorMessage
+    statusAriaUpdater()
+
 }
 
 function checkCommentsValidity(event){
-    event.preventDefault();
-
     let errorMessage = ''
   
 
     if(textField.validity.valueMissing || textField.validity.tooShort){
-        errorMessage += '\n - You need at least 10 characters for the Comments field. You are currently using (' + (textField.value.length) + ') characters.'
+        errorMessage += '\n- You need at least 10 characters for the Comments field.'
         
     }
 
     textField.setCustomValidity(errorMessage)
-    textField.reportValidity()
-    ariaField.textContent = errorMessage
+    if(event.type != 'invalid'){
+        textField.reportValidity()
+    }
 
+    currentErrors.comments = errorMessage
+    statusAriaUpdater()
 
     
 }
@@ -120,11 +144,9 @@ function updateCommentCount(){
         countMessage = 'Character limit reached'
     }
     if(textField.value.length >= textField.maxLength - 100 ){
-        console.log('a')
         ariaCount.classList.replace('notNear','nearMax')
     }
     else{
-        console.log('b')
         ariaCount.classList.replace('nearMax','notNear')
     }
     
