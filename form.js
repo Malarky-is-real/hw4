@@ -159,24 +159,27 @@ function checkCommentsValidity(event){
     
 }
 
-function updateCommentCount(){
-    let remaining = textField.maxLength - textField.value.length
-    let countMessage = 'Remaining Characters: ' + (remaining)
-    currClassName = ariaCount.className
-    if(remaining == 0){
-        countMessage = 'Character limit reached'
-        ariaCount.classList.replace(currClassName,'atMax')
+function updateCommentCount() {
+    const remaining = textField.maxLength - textField.value.length;
+    let countMessage = '';
+    
+    ariaCount.classList.remove('notNear', 'nearMax', 'atMax');
+    
+    if (remaining === 0) {
+        countMessage = 'Character limit reached.';
+        ariaCount.classList.add('atMax');
     } 
-    else if(remaining <= 25){
-        ariaCount.classList.replace(currClassName,'nearMax')
-    }
-    else{
-        ariaCount.classList.replace(currClassName,'notNear')
+    else if (remaining <= 10) {
+        countMessage = 'Warning: Only ' + remaining + ' characters left!';
+        ariaCount.classList.add('nearMax');
+    } 
+    else {
+        countMessage = 'Remaining Characters: ' + remaining;
+        ariaCount.classList.add('notNear');
     }
     
-    ariaCount.textContent = countMessage
+    ariaCount.textContent = countMessage;
 }
-
 
 
 
