@@ -4,12 +4,12 @@ const ariaField = document.getElementById('formStatus')
 const ariaCount = document.getElementById('charCount')
 
 
-const jsDepElems = document.getElementsByClassName('jsOff')
-const baseLength = jsDepElems.length
+let jsDepElems = document.getElementsByClassName('jsOff')
+let baseLength = jsDepElems.length
 console.log(jsDepElems.length)
-for(let i = 0; i < baseLength; i++){
+for(let i = 1; i < baseLength; i++){
     console.log(i)
-    jsDepElems[0].classList.replace('jsOff','formRow')
+    jsDepElems[1].classList.replace('jsOff','formRow')
 }
 
 
@@ -42,7 +42,7 @@ textField.addEventListener('input', updateCommentCount)
 textField.addEventListener('input', checkCommentsValidity, true)
 textField.addEventListener('invalid', checkCommentsValidity, true)
 
-form.addEventListener('submit', submitErrors)
+submitButton.addEventListener('click', finalCheck)
 
 
 
@@ -50,33 +50,45 @@ form.addEventListener('submit', submitErrors)
 const finErrs = [];
 
 
-function submitErrors(){  
+function submitErrors(){
+    if (currentErrors.name){ 
+        finErrs.push({field: 'Name', message: currentErrors.name});
+    }
+    if (currentErrors.email){
+        finErrs.push({field: 'Email', message: currentErrors.email})
+    }
+    if (currentErrors.comments)
+    {
+        finErrs.push({field: 'Comments', message: currentErrors.comments})
+    } 
+    
+
     errorsField.value = JSON.stringify(finErrs)    
 }
 
+function finalCheck(){
+    form.checkValidity()
+    submitErrors()
+}
 
 const currentErrors = {
     name: '',
     email: '',
     comments: ''
-};
+}
 
 function statusAriaUpdater(){
-    console.log(finErrs)
     const activeErrors = [];
     if (currentErrors.name){ 
         activeErrors.push(currentErrors.name);
-        finErrs.push({field: 'Name', message: currentErrors.name});
     }
     if (currentErrors.email){
         activeErrors.push(currentErrors.email)
-        finErrs.push({field: 'Email', message: currentErrors.email})
 
     }
     if (currentErrors.comments)
     {
         activeErrors.push(currentErrors.comments)
-        finErrs.push({field: 'Comments', message: currentErrors.comments})
 
     } 
     
@@ -150,16 +162,16 @@ function checkCommentsValidity(event){
 function updateCommentCount(){
     let countMessage = 'Remaining Characters: ' + (textField.maxLength - textField.value.length)
     
-    
+    let currClassName = ariaCount.className
     if(textField.value.length == textField.maxLength){
         countMessage = 'Character limit reached'
-        ariaCount.classList.replace('nearMax','atMax')
-    }
-    if(textField.value.length >= textField.maxLength - 100 ){
-        ariaCount.classList.replace('notNear','nearMax')
+        ariaCount.classList.replace(currClassName,'atMax')
+    } 
+    else if(textField.value.length >= textField.maxLength - 100 ){
+        ariaCount.classList.replace(currClassName,'nearMax')
     }
     else{
-        ariaCount.classList.replace('nearMax','notNear')
+        ariaCount.classList.replace(currClassName,'notNear')
     }
     
     ariaCount.textContent = countMessage

@@ -2,12 +2,8 @@ const modeButton = document.getElementById("modeButton")
 modeButton.addEventListener('click', themeChanger)
 applyTheme(getModePref());
 
-const jsDepElems = document.getElementsByClassName('jsOff')
-const baseLength = jsDepElems.length
-for(let i = 0; i < baseLength; i++){
-    console.log(i)
-    jsDepElems[0].classList.replace('jsOff','na')
-}
+
+document.getElementsByClassName('jsOff')[0].classList.replace('jsOff','na')
 
 
 function getModePref(){
