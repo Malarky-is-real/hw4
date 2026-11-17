@@ -26,7 +26,11 @@ form.addEventListener('submit', submitErrors)
 let form_errors= []
 
 
+
+
 function checkErrors(event){
+
+    event.preventDefault();
     const failedField = event.target
     form_errors.push({field: failedField.name, message: failedField.validationMessage})
     console.log({field: failedField.name, message: failedField.validationMessage})
@@ -55,6 +59,7 @@ function checkAllValidity(){
 
 
 function checkNameValidity(){
+    
     errorMessage = ''    
 
     if(nameField.validity.valueMissing || nameField.validity.tooShort){
