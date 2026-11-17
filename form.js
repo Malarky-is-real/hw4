@@ -3,7 +3,7 @@ const form = document.getElementById('contactForm')
 
 const nameField = document.getElementById('Name')
 const emailField = document.getElementById('Email')
-const textField = document.getElementById('comments')
+const textField = document.getElementById('Comments')
 const errorsField = document.getElementById('form-errors')
 
 
@@ -16,10 +16,16 @@ const submitButton = document.getElementById('submitButton')
 let globalWarnings = false
 
 
-nameField.addEventListener('blur', checkNameValidity)
-emailField.addEventListener('blur', checkEmailValidity)
+nameField.addEventListener('blur', checkNameValidity, true)
+nameField.addEventListener('invalid', checkNameValidity, true)
+
+emailField.addEventListener('blur', checkEmailValidity, true)
+emailField.addEventListener('invalid', checkEmailValidity, true)
+
 textField.addEventListener('input', updateCommentCount)
-textField.addEventListener('blur', checkCommentsValidity)
+textField.addEventListener('blur', checkCommentsValidity, true)
+textField.addEventListener('invalid', checkCommentsValidity, true)
+
 form.addEventListener('invalid', checkErrors, true)
 form.addEventListener('submit', submitErrors)
 
@@ -29,8 +35,6 @@ let form_errors= []
 
 
 function checkErrors(event){
-
-    event.preventDefault();
     const failedField = event.target
     form_errors.push({field: failedField.name, message: failedField.validationMessage})
     console.log({field: failedField.name, message: failedField.validationMessage})
@@ -38,6 +42,7 @@ function checkErrors(event){
 
 
 function submitErrors(){
+    console.log("AAA")
     errorsField.value = JSON.stringify(form_errors)    
 }
 
@@ -45,9 +50,7 @@ function submitErrors(){
 
 
 function checkAllValidity(){
-    console.log('a')
     checkNameValidity()
-
     checkCommentsValidity()
     checkEmailValidity()
 
@@ -58,8 +61,9 @@ function checkAllValidity(){
 }
 
 
-function checkNameValidity(){
-    
+function checkNameValidity(event){
+    event.preventDefault();
+
     errorMessage = ''    
 
     if(nameField.validity.valueMissing || nameField.validity.tooShort){
@@ -70,7 +74,8 @@ function checkNameValidity(){
     ariaField.textContent = errorMessage
 }
 
-function checkEmailValidity(){
+function checkEmailValidity(event){
+    event.preventDefault();
 
     let errorMessage = ''
 
@@ -88,7 +93,8 @@ function checkEmailValidity(){
     ariaField.textContent = errorMessage
 }
 
-function checkCommentsValidity(){
+function checkCommentsValidity(event){
+    event.preventDefault();
 
     let errorMessage = ''
   
