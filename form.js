@@ -160,14 +160,15 @@ function checkCommentsValidity(event){
 }
 
 function updateCommentCount(){
-    let countMessage = 'Remaining Characters: ' + (textField.maxLength - textField.value.length)
+    let remaining = textField.maxLength - textField.value.length
+    let countMessage = 'Remaining Characters: ' + (remaining)
+    let currClassName = ariaCount.className.remove('notNear', 'nearMax', 'atMax')
     
-    let currClassName = ariaCount.className
-    if(textField.value.length == textField.maxLength){
+    if(remaining == 0){
         countMessage = 'Character limit reached'
         ariaCount.classList.replace(currClassName,'atMax')
     } 
-    else if(textField.value.length >= textField.maxLength - 100 ){
+    else if(remaining <= 25){
         ariaCount.classList.replace(currClassName,'nearMax')
     }
     else{
