@@ -162,8 +162,7 @@ function checkCommentsValidity(event){
 function updateCommentCount(){
     let remaining = textField.maxLength - textField.value.length
     let countMessage = 'Remaining Characters: ' + (remaining)
-    let currClassName = ariaCount.className.remove('notNear', 'nearMax', 'atMax')
-    
+    currClassName = ariaCount.className
     if(remaining == 0){
         countMessage = 'Character limit reached'
         ariaCount.classList.replace(currClassName,'atMax')
