@@ -698,6 +698,9 @@ input:user-valid{
     text-decoration: none;
 }
 
+.jsOff{
+    display: none;
+}
 
 math{
     font-size: 2em;

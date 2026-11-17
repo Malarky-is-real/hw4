@@ -1,15 +1,28 @@
 
+
+const ariaField = document.getElementById('formStatus')
+const ariaCount = document.getElementById('charCount')
+
+
+const jsDepElems = document.getElementsByClassName('jsOff')
+const baseLength = jsDepElems.length
+console.log(jsDepElems.length)
+for(let i = 0; i < baseLength; i++){
+    console.log(i)
+    jsDepElems[0].classList.replace('jsOff','formRow')
+}
+
+
+
 const form = document.getElementById('contactForm')
+
 
 const nameField = document.getElementById('Name')
 const emailField = document.getElementById('Email')
 const textField = document.getElementById('Comments')
 const errorsField = document.getElementById('form-errors')
-
-
-const ariaField = document.getElementById('formStatus')
-const ariaCount = document.getElementById('charCount')
 const submitButton = document.getElementById('submitButton')
+
 
 
 
